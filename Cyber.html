@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption & Decryption Game</title>
+    <style>
+        /* CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            text-align: center;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #0077cc;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .game-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .table-container {
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #0077cc;
+            color: white;
+        }
+
+        .question {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #005fa3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #28a745;
+        }
+
+        .incorrect {
+            color: #dc3545;
+        }
+
+        .file-question {
+            margin-top: 30px;
+            font-size: 18px;
+        }
+
+        .file-question button {
+            margin-top: 10px;
+        }
+
+        .answer-feedback {
+            margin-top: 15px;
+            font-size: 18px;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Encryption & Decryption Game</h1>
+
+    <div class="game-container">
+        <!-- Table displaying the encryption-decryption mapping -->
+        <div class="table-container">
+            <p><strong>Given Table:</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Letter</th>
+                        <th>Mapped Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>A</td><td>--> M</td></tr>
+                    <tr><td>B</td><td>--> R</td></tr>
+                    <tr><td>C</td><td>--> D</td></tr>
+                    <tr><td>D</td><td>--> C</td></tr>
+                    <tr><td>E</td><td>--> F</td></tr>
+                    <tr><td>F</td><td>--> T</td></tr>
+                    <tr><td>G</td><td>--> 7</td></tr>
+                    <tr><td>H</td><td>--> 3</td></tr>
+                    <tr><td>I</td><td>--> I</td></tr>
+                    <tr><td>J</td><td>--> O</td></tr>
+                    <tr><td>K</td><td>--> S</td></tr>
+                    <tr><td>L</td><td>--> 0</td></tr>
+                    <tr><td>M</td><td>--> ,</td></tr>
+                    <tr><td>N</td><td>--> NN</td></tr>
+                    <tr><td>O</td><td>--> P</td></tr>
+                    <tr><td>W</td><td>--> ll</td></tr>
+                    <tr><td>R</td><td>--> kk</td></tr>
+                    <tr><td>!</td><td>--> 98</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- First Question: Decryption -->
+        <div class="question">
+            <p>Decrypt the following text: <strong>3F00P LLPKK0C98</strong></p>
+            <p>Use capital letters and spaces if needed.</p>
+            <p>Your answer:</p>
+            <input type="text" id="answer" placeholder="Enter your answer here" />
+            <button onclick="checkAnswer()">Submit</button>
+        </div>
+        
+        <div class="result" id="resultMessage"></div>
+
+        <!-- Second Question: Malware File -->
+        <div class="file-question">
+            <p><strong>QUESTION: GUESS THE MALWARE FILE</strong></p>
+            <p>Which of the following files is suspicious?</p>
+            <p>1. update.bat</p>
+            <p>2. windows.dll</p>
+            <p>3. system_update.txt</p>
+            <p>4. driver.sys</p>
+
+            <p>Choose your answer (1, 2, 3, or 4):</p>
+            <input type="text" id="malwareAnswer" placeholder="Enter your choice here" />
+            <button onclick="checkMalwareAnswer()">Submit Answer</button>
+            <div id="malwareFeedback" class="answer-feedback"></div>
+        </div>
+    </div>
+
+    <script>
+        // Check answer for the decryption question
+        function checkAnswer() {
+            const answer = document.getElementById('answer').value.trim().toUpperCase();
+            const resultMessage = document.getElementById('resultMessage');
+            
+            // Correct answer for decryption
+            if (answer === "HELLO WORLD!") {
+                resultMessage.textContent = "You are correct! Congratulations!";
+                resultMessage.classList.remove("incorrect");
+                resultMessage.classList.add("correct");
+            } else {
+                resultMessage.textContent = "Incorrect answer. Try again.";
+                resultMessage.classList.remove("correct");
+                resultMessage.classList.add("incorrect");
+            }
+        }
+
+        // Check answer for the malware file question
+        function checkMalwareAnswer() {
+            const malwareAnswer = document.getElementById('malwareAnswer').value.trim();
+            const malwareFeedback = document.getElementById('malwareFeedback');
+            
+            // Correct answer for the malware file question (update.bat)
+            if (malwareAnswer === "1") {
+                malwareFeedback.textContent = "Correct! 'update.bat' is a suspicious batch file that fakes a system update.";
+                malwareFeedback.classList.remove("incorrect");
+                malwareFeedback.classList.add("correct");
+            } else {
+                malwareFeedback.textContent = "Incorrect. 'update.bat' is a suspicious file. It's a batch file pretending to be a system update.";
+                malwareFeedback.classList.remove("correct");
+                malwareFeedback.classList.add("incorrect");
+            }
+        }
+    </script>
+</body>
+</html>
